@@ -18,12 +18,12 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1634153973178,
+  "iteration": 1634309346935,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -37,7 +37,7 @@
           },
           "displayName": "Electricity hourly usage",
           "mappings": [],
-          "max": 1.5,
+          "max": 2,
           "min": 0,
           "thresholds": {
             "mode": "percentage",
@@ -101,7 +101,7 @@
           "measurement": "electricity",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -174,7 +174,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "max"
           ],
           "fields": "",
           "values": false
@@ -203,7 +203,7 @@
           "measurement": "gas",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/gas_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/gas_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -275,7 +275,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "delta"
+            "sum"
           ],
           "fields": "",
           "values": false
@@ -304,7 +304,7 @@
           "measurement": "water",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> yield(name: \"mean\")\n",
+          "query": "import \"experimental/aggregate\"\nfrom(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregate.rate(every: 1h, unit: 5m)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -432,7 +432,7 @@
           "measurement": "electricity",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -557,7 +557,7 @@
           "measurement": "gas",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/gas_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/gas_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -686,7 +686,7 @@
           "measurement": "water",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> yield(name: \"mean\")\n",
+          "query": "import \"experimental/aggregate\"\nfrom(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregate.rate(every: 1h, unit: 5m)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -718,6 +718,540 @@
       ],
       "title": "Water consumption / hour",
       "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyEUR"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value 1"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tariff 1"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value 2"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Tariff 2"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 5
+      },
+      "id": 38,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_1\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_1},\n        }),\n    )",
+          "refId": "A"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_2},\n        }),\n    )",
+          "refId": "B"
+        }
+      ],
+      "title": "Electricity",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Total",
+            "binary": {
+              "left": "Value 1",
+              "operator": "+",
+              "reducer": "sum",
+              "right": "Value 2"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyEUR"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 5
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        }),\n    )",
+          "refId": "A"
+        }
+      ],
+      "title": "Gas",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyEUR"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 5
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        }),\n    )",
+          "refId": "A"
+        }
+      ],
+      "title": "Water",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "decimals": 2,
+          "displayName": "Total",
+          "mappings": [
+            {
+              "options": {
+                "match": "nan",
+                "result": {
+                  "index": 0,
+                  "text": "-"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "currencyEUR"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_1\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_1},\n        }),\n    )",
+          "refId": "A"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_2},\n        }),\n    )",
+          "refId": "B"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        }),\n    )",
+          "refId": "C"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        }),\n    )",
+          "refId": "D"
+        }
+      ],
+      "title": "Total",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "electricity",
+            "binary": {
+              "left": "Value 1",
+              "operator": "+",
+              "reducer": "sum",
+              "right": "Value 2"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "electricity+gas",
+            "binary": {
+              "left": "electricity",
+              "operator": "+",
+              "reducer": "sum",
+              "right": "value {host=\"energy.local\", name=\"gas\", topic=\"dsmr/consumption/gas/delivered\"}"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "total",
+            "binary": {
+              "left": "electricity+gas",
+              "operator": "+",
+              "reducer": "sum",
+              "right": "value {host=\"energy.local\", name=\"gas\", topic=\"dsmr/consumption/gas/delivered\"}"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 0,
+        "y": 8
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "electricity_delivered_1 = from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_1\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n\nelectricity_delivered_2 = from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n \nunion(tables: [electricity_delivered_1, electricity_delivered_2])\n    |> group()\n    |> increase()",
+          "refId": "A"
+        }
+      ],
+      "title": "Electricity consumption",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "m3"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 7,
+        "y": 8
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> increase()",
+          "refId": "A"
+        }
+      ],
+      "title": "Gas consumption",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "litre"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 15,
+        "y": 8
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> increase()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Water consumption",
+      "transparent": true,
+      "type": "stat"
     },
     {
       "datasource": null,
@@ -781,10 +1315,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 12,
         "x": 0,
-        "y": 5
+        "y": 13
       },
       "id": 16,
       "options": {
@@ -816,7 +1350,7 @@
           "measurement": "electricity",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_currently_delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_currently_delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -892,14 +1426,6 @@
               {
                 "color": "transparent",
                 "value": null
-              },
-              {
-                "color": "blue",
-                "value": 0.1
-              },
-              {
-                "color": "blue",
-                "value": 0.15
               }
             ]
           },
@@ -908,10 +1434,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 12,
         "x": 12,
-        "y": 5
+        "y": 13
       },
       "id": 18,
       "options": {
@@ -943,7 +1469,7 @@
           "measurement": "gas",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> yield(name: \"mean\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative()",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1044,10 +1570,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 19
       },
       "id": 20,
       "options": {
@@ -1080,7 +1606,7 @@
           "measurement": "water",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> yield(name: \"mean\")\n",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1144,11 +1670,11 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "never",
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "normal"
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -1170,24 +1696,27 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "value {host=\"energy.local\", name=\"electricity\", topic=\"dsmr/reading/electricity_currently_delivered\"}"
+              "id": "byFrameRefID",
+              "options": "A"
             },
             "properties": [
               {
-                "id": "custom.hideFrom",
+                "id": "displayName",
+                "value": "Electricity"
+              },
+              {
+                "id": "color",
                 "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
+                  "fixedColor": "orange",
+                  "mode": "fixed"
                 }
               }
             ]
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "value {host=\"energy.local\", name=\"gas\", topic=\"dsmr/consumption/gas/delivered\"}"
+              "id": "byFrameRefID",
+              "options": "B"
             },
             "properties": [
               {
@@ -1205,8 +1734,8 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "value {host=\"energy.local\", name=\"water\", topic=\"watermeter/reading/current_value\"}"
+              "id": "byFrameRefID",
+              "options": "C"
             },
             "properties": [
               {
@@ -1221,60 +1750,14 @@
                 }
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": ".*topic=\"dsmr/reading/electricity_tariff\".*"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "text",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "displayName",
-                "value": "Electricity Tariff"
-              },
-              {
-                "id": "decimals",
-                "value": 6
-              },
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": true,
-                  "tooltip": true,
-                  "viz": true
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Electricity"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "orange",
-                  "mode": "fixed"
-                }
-              }
-            ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 7,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 19
       },
       "id": 22,
       "options": {
@@ -1289,337 +1772,23 @@
       },
       "targets": [
         {
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_currently_delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> map(fn: (r) => ({\n    r with\n    _value: r._value\n  })\n  )",
+          "query": "energy = from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_currently_delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _energy: r._value,\n        }),\n    )\n\ntariff = from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_tariff\")\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: \n                if int(v: r._value) == 2 then \n                   ${electricity_tariff_2}\n                else \n                   ${electricity_tariff_1}\n        }),\n    )\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n\njoin(\n    tables: {t1: energy, t2: tariff},\n    on: [\"_time\"],\n)\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value * r._energy,\n        }),\n    )\n",
           "refId": "A"
         },
         {
           "hide": false,
-          "query": "  from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> map(fn: (r) => ({\n    r with\n    _value: r._value * ${gas_tariff}\n  })\n  )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        })\n    )",
           "refId": "B"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value * ${water_tariff}\n    })\n  )\n",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        })\n    )",
           "refId": "C"
-        },
-        {
-          "hide": false,
-          "query": "from(bucket: \"energy_consumption\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_tariff\")\n  |> map(fn: (r) => ({\n    r with\n    _value: \n      if int(v: r._value) == 2\n        then ${electricity_tariff_2}\n      else ${electricity_tarif_1}\n   }))\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
-          "refId": "D"
         }
       ],
       "title": "Cost",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Electricity",
-            "binary": {
-              "left": "value {host=\"energy.local\", name=\"electricity\", topic=\"dsmr/reading/electricity_currently_delivered\"}",
-              "operator": "*",
-              "reducer": "sum",
-              "right": "value {host=\"energy.local\", name=\"dsrm\", topic=\"dsmr/reading/electricity_tariff\"}"
-            },
-            "mode": "binary",
-            "reduce": {
-              "include": [
-                "dsrm tariff {_field=\"value\", _start=\"2021-10-13 15:35:04.484 +0000 UTC\", _stop=\"2021-10-13 18:35:04.484 +0000 UTC\", host=\"energy.local\", topic=\"dsmr/reading/electricity_tariff\"}"
-              ],
-              "reducer": "sum"
-            },
-            "replaceFields": false
-          }
-        }
-      ],
+      "transformations": [],
       "transparent": true,
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 21
-      },
-      "id": 24,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "title": "Panel Title",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 5,
-        "y": 21
-      },
-      "id": 28,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "title": "Panel Title",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 11,
-        "y": 21
-      },
-      "id": 29,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "title": "Panel Title",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 16,
-        "y": 21
-      },
-      "id": 30,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "title": "Panel Title",
       "type": "timeseries"
     }
   ],
@@ -1634,7 +1803,7 @@
         "error": null,
         "hide": 2,
         "label": "Electricity Low Tariff",
-        "name": "electricity_tarif_1",
+        "name": "electricity_tariff_1",
         "query": "0.236289",
         "skipUrlSync": false,
         "type": "constant"
@@ -1672,12 +1841,12 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Electricity / Gas / Water",
   "uid": "eHaFI8zgz",
-  "version": 17
+  "version": 51
 }
