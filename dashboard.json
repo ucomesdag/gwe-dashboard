@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1634377593573,
+  "iteration": 1634382572115,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -65,6 +65,7 @@
         "y": 0
       },
       "id": 4,
+      "interval": null,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
@@ -99,7 +100,7 @@
           "measurement": "electricity",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -125,7 +126,7 @@
           ]
         }
       ],
-      "title": "Electricity hourly usage",
+      "title": "Electricity usage / h",
       "transparent": true,
       "type": "gauge"
     },
@@ -167,6 +168,7 @@
         "y": 0
       },
       "id": 6,
+      "interval": null,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
@@ -226,7 +228,7 @@
           ]
         }
       ],
-      "title": "Gas hourly usage",
+      "title": "Gas usage / h",
       "transparent": true,
       "type": "gauge"
     },
@@ -268,6 +270,7 @@
         "y": 0
       },
       "id": 8,
+      "interval": null,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
@@ -327,7 +330,7 @@
           ]
         }
       ],
-      "title": "Water hourly usage",
+      "title": "Water usage / h",
       "transparent": true,
       "type": "gauge"
     },
@@ -402,6 +405,7 @@
         "y": 0
       },
       "id": 10,
+      "interval": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -431,7 +435,7 @@
           "measurement": "electricity",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_hourly_usage\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  ",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -457,7 +461,7 @@
           ]
         }
       ],
-      "title": "Electricity consumption / hour",
+      "title": "Electricity consumption / h",
       "transparent": true,
       "type": "timeseries"
     },
@@ -528,6 +532,7 @@
         "y": 0
       },
       "id": 12,
+      "interval": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -583,7 +588,7 @@
           ]
         }
       ],
-      "title": "Gas consumption / hour",
+      "title": "Gas consumption / h",
       "transparent": true,
       "type": "timeseries"
     },
@@ -658,6 +663,8 @@
         "y": 0
       },
       "id": 14,
+      "interval": null,
+      "maxDataPoints": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -687,7 +694,7 @@
           "measurement": "water",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "import \"experimental/aggregate\"\nfrom(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregate.rate(every: 1h, unit: 5m)",
+          "query": "import \"experimental/aggregate\"\nfrom(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregate.rate(every: 30m, unit: 5m)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -717,7 +724,7 @@
           ]
         }
       ],
-      "title": "Water consumption / hour",
+      "title": "Water consumption / h",
       "transparent": true,
       "type": "timeseries"
     },
@@ -780,6 +787,7 @@
         "y": 5
       },
       "id": 38,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -860,6 +868,7 @@
         "y": 5
       },
       "id": 28,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -920,6 +929,7 @@
         "y": 5
       },
       "id": 29,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -990,6 +1000,7 @@
         "y": 5
       },
       "id": 30,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1117,6 +1128,7 @@
         "y": 8
       },
       "id": 36,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1144,7 +1156,7 @@
           "refId": "B"
         }
       ],
-      "title": "Electricity consumption",
+      "title": "Electricity cumulative",
       "transformations": [
         {
           "id": "calculateField",
@@ -1195,6 +1207,7 @@
         "y": 8
       },
       "id": 34,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1217,7 +1230,7 @@
           "refId": "A"
         }
       ],
-      "title": "Gas consumption",
+      "title": "Gas cumulative",
       "transparent": true,
       "type": "stat"
     },
@@ -1255,6 +1268,7 @@
         "y": 8
       },
       "id": 32,
+      "interval": null,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1277,7 +1291,7 @@
           "refId": "A"
         }
       ],
-      "title": "Water consumption",
+      "title": "Water cumulative",
       "transparent": true,
       "type": "stat"
     },
@@ -1349,6 +1363,7 @@
         "y": 13
       },
       "id": 16,
+      "interval": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -1468,6 +1483,7 @@
         "y": 13
       },
       "id": 18,
+      "interval": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -1475,7 +1491,7 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
       "targets": [
@@ -1528,6 +1544,7 @@
           ]
         }
       ],
+      "timeFrom": null,
       "title": "Gas usage",
       "transformations": [],
       "transparent": true,
@@ -1598,12 +1615,13 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 12,
         "x": 0,
         "y": 19
       },
       "id": 20,
+      "interval": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -1634,7 +1652,7 @@
           "measurement": "water",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")",
+          "query": "from(bucket: \"smart_meter\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> derivative()",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1664,6 +1682,7 @@
           ]
         }
       ],
+      "timeFrom": null,
       "timeShift": null,
       "title": "Water usage",
       "transformations": [],
@@ -1676,7 +1695,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "continuous-GrYlRd",
+            "mode": "fixed",
             "seriesBy": "last"
           },
           "custom": {
@@ -1686,13 +1705,16 @@
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 25,
-            "gradientMode": "opacity",
+            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
             "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -1702,13 +1724,12 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "line"
+              "mode": "off"
             }
           },
-          "decimals": 2,
           "mappings": [],
           "thresholds": {
             "mode": "percentage",
@@ -1724,14 +1745,10 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byFrameRefID",
-              "options": "A"
+              "id": "byName",
+              "options": "Electricity"
             },
             "properties": [
-              {
-                "id": "displayName",
-                "value": "Electricity"
-              },
               {
                 "id": "color",
                 "value": {
@@ -1743,8 +1760,40 @@
           },
           {
             "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
+              "id": "byName",
+              "options": "Value 1"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value 2"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "value {host=\"energy.local\", name=\"gas\", topic=\"dsmr/consumption/gas/delivered\"}"
             },
             "properties": [
               {
@@ -1762,8 +1811,8 @@
           },
           {
             "matcher": {
-              "id": "byFrameRefID",
-              "options": "C"
+              "id": "byName",
+              "options": "value {host=\"energy.local\", name=\"water\", topic=\"watermeter/reading/current_value\"}"
             },
             "properties": [
               {
@@ -1782,12 +1831,14 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 12,
         "x": 12,
         "y": 19
       },
       "id": 22,
+      "interval": "30s",
+      "maxDataPoints": null,
       "options": {
         "legend": {
           "calcs": [],
@@ -1800,27 +1851,52 @@
       },
       "targets": [
         {
-          "query": "energy = from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_currently_delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _energy: r._value,\n        }),\n    )\n\ntariff = from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_tariff\")\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: \n                if int(v: r._value) == 2 then \n                   ${electricity_tariff_2}\n                else \n                   ${electricity_tariff_1}\n        }),\n    )\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n\njoin(\n    tables: {t1: energy, t2: tariff},\n    on: [\"_time\"],\n)\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value * r._energy,\n        }),\n    )\n",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_1\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_1},\n        }),\n    )",
           "refId": "A"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        })\n    )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_2},\n        }),\n    )",
           "refId": "B"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative(nonNegative: true, columns: [\"_value\"], timeColumn: \"_time\")\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        })\n    )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        }),\n    )",
           "refId": "C"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        }),\n    )",
+          "refId": "D"
         }
       ],
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Cost",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Electricity",
+            "binary": {
+              "left": "Value 1",
+              "operator": "+",
+              "reducer": "sum",
+              "right": "Value 2"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        }
+      ],
       "transparent": true,
       "type": "timeseries"
     }
   ],
-  "refresh": "5m",
+  "refresh": "10s",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [],
@@ -1869,12 +1945,12 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Electricity / Gas / Water",
   "uid": "eHaFI8zgz",
-  "version": 58
+  "version": 66
 }
