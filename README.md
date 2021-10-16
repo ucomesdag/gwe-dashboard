@@ -92,7 +92,7 @@ $ sudo /bin/systemctl restart telegraf
 $ sudo /bin/systemctl enable grafana-server
 $ sudo /bin/systemctl start grafana-server
 ```
-You can now access Grafana at: `http://<ip address>:3000` with `admin` as user and password..  
+You can now access Grafana at: `http://<ip address>:3000` with `admin` as user and password.
 
 Add the InfluxDB as a new datasource, edit the `dashboard.json` and replace the bucketname "smart_meter" with your bucket name and import it.
 
