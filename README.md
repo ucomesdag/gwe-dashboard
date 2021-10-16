@@ -27,7 +27,7 @@ P1 wifi gateway via MQTT --> Mosquitto <-- Telegraph
 ## Instalation
 
 ### Preparing you Raspberry Pi
-Download the e[64 bit Raspberry Pi OS ][pi-os] and image your sd-card with [Raspberry Pi Imager][pi-imager] or [BalenaEtcher][balena-etcher].
+Download the [64 bit Raspberry Pi OS ][pi-os] and image your sd-card with [Raspberry Pi Imager][pi-imager] or [BalenaEtcher][balena-etcher].
 
 ### Add the Grafana repository 
 ```
