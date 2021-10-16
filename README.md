@@ -23,7 +23,7 @@ P1 wifi gateway via MQTT --> Mosquitto <-- Telegraph
                                                |
                                             Grafana
 ```
-The P1 wifi gateway (and also the Watermeter gateway) will send the gathered data with the MQTT protocol, approx. every 5-10 seconds, to the Mosquitto MQTT broker. From there Telegraf will read the topics and output them to an InfluxDB bucket. Grafana then uses the InfluxDB as a data source and displays your graphs.
+The P1 wifi gateway (and the Watermeter gateway) will send the gathered data with the MQTT protocol, approx. every 5-10 seconds, to the Mosquitto MQTT broker. From the MQTT broker Telegraf will read the topics and output them to an InfluxDB bucket. Grafana then uses the InfluxDB as a data source and displays your graphs.
 
 ## Instalation
 
