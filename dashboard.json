@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1634468287770,
+  "iteration": 1634472083478,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -1019,22 +1019,23 @@
       "pluginVersion": "8.2.1",
       "targets": [
         {
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_1\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_1},\n        }),\n    )",
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_1\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            electricity_1: r._value * ${electricity_tariff_1},\n        }),\n    )",
           "refId": "A"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_2},\n        }),\n    )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            electricity_2: r._value * ${electricity_tariff_2},\n        }),\n    )",
           "refId": "B"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        }),\n    )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            gas: r._value * 0.864739,\n        }),\n    )",
           "refId": "C"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> increase()\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        }),\n    )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\n    |> increase()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            water: r._value / 1000.0 * 1.33,\n        }),\n    )",
           "refId": "D"
         }
       ],
@@ -1045,10 +1046,10 @@
           "options": {
             "alias": "electricity",
             "binary": {
-              "left": "Value 1",
+              "left": "electricity_1",
               "operator": "+",
               "reducer": "sum",
-              "right": "Value 2"
+              "right": "electricity_2"
             },
             "mode": "binary",
             "reduce": {
@@ -1065,7 +1066,7 @@
               "left": "electricity",
               "operator": "+",
               "reducer": "sum",
-              "right": "value {host=\"energy.local\", name=\"gas\", topic=\"dsmr/consumption/gas/delivered\"}"
+              "right": "gas"
             },
             "mode": "binary",
             "reduce": {
@@ -1082,7 +1083,7 @@
               "left": "electricity_gas",
               "operator": "+",
               "reducer": "sum",
-              "right": "value {host=\"energy.local\", name=\"water\", topic=\"watermeter/reading/current_value\"}"
+              "right": "water"
             },
             "mode": "binary",
             "reduce": {
@@ -1857,17 +1858,17 @@
         {
           "hide": false,
           "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/reading/electricity_delivered_2\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value *  ${electricity_tariff_2},\n        }),\n    )",
-          "refId": "B"
-        },
-        {
-          "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({r with\n            _value: r._value * ${gas_tariff}\n        }),\n    )",
           "refId": "C"
         },
         {
           "hide": false,
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({r with\n            _value: (r._value / 1000.0) * ${water_tariff}\n        }),\n    )",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: (r._value / 1000.0) * ${water_tariff}\n        }),\n    )",
           "refId": "D"
+        },
+        {
+          "hide": false,
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"dsmr/consumption/gas/delivered\")\n    |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n    |> derivative()\n    |> map(\n        fn: (r) => ({\n            _time: r._time,\n            _value: r._value * ${gas_tariff}\n        }),\n    )",
+          "refId": "B"
         }
       ],
       "timeFrom": null,
@@ -1945,12 +1946,12 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Electricity / Gas / Water",
   "uid": "eHaFI8zgz",
-  "version": 76
+  "version": 86
 }
