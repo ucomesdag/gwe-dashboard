@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1634414814655,
+  "iteration": 1634468287770,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -70,7 +70,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "mean"
           ],
           "fields": "",
           "values": false
@@ -173,7 +173,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "max"
+            "mean"
           ],
           "fields": "",
           "values": false
@@ -304,7 +304,7 @@
           "measurement": "water",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n    |> difference()\n    |> timedMovingAverage(every: 15m, period: 1h)\n",
+          "query": "from(bucket: \"smart_meter\")\n    |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n    |> filter(fn: (r) => r[\"topic\"] == \"watermeter/reading/current_value\")\n    |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n    |> timedMovingAverage(every: 5m, period: 1h)\n    |> difference()\n    |> timedMovingAverage(every: 30m, period: 1h)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1945,12 +1945,12 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Electricity / Gas / Water",
   "uid": "eHaFI8zgz",
-  "version": 74
+  "version": 76
 }
