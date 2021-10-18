@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1634472910660,
+  "iteration": 1634570894915,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -136,7 +136,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "purple",
             "mode": "fixed"
           },
           "mappings": [],
@@ -238,7 +238,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "purple",
+            "fixedColor": "blue",
             "mode": "fixed"
           },
           "mappings": [],
@@ -470,7 +470,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "purple",
             "mode": "fixed"
           },
           "custom": {
@@ -597,7 +597,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "purple",
+            "fixedColor": "blue",
             "mode": "fixed",
             "seriesBy": "last"
           },
@@ -843,7 +843,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "purple",
             "mode": "fixed"
           },
           "decimals": 3,
@@ -900,7 +900,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "purple",
+            "fixedColor": "blue",
             "mode": "fixed"
           },
           "decimals": 3,
@@ -1184,7 +1184,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "purple",
             "mode": "fixed"
           },
           "mappings": [],
@@ -1241,7 +1241,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "purple",
+            "fixedColor": "blue",
             "mode": "fixed"
           },
           "mappings": [],
@@ -1429,7 +1429,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "blue",
+            "fixedColor": "purple",
             "mode": "fixed",
             "seriesBy": "last"
           },
@@ -1556,7 +1556,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "purple",
+            "fixedColor": "blue",
             "mode": "fixed",
             "seriesBy": "last"
           },
@@ -1808,7 +1808,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "blue",
+                  "fixedColor": "purple",
                   "mode": "fixed"
                 }
               }
@@ -1827,7 +1827,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "purple",
+                  "fixedColor": "blue",
                   "mode": "fixed"
                 }
               }
@@ -1950,12 +1950,12 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Electricity / Gas / Water",
   "uid": "eHaFI8zgz",
-  "version": 92
+  "version": 93
 }
