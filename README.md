@@ -30,6 +30,8 @@ The P1 wifi gateway (and the Watermeter gateway) will send the gathered data wit
 ### Preparing you Raspberry Pi
 Download the [64 bit Raspberry Pi OS ][pi-os] and image your sd-card with [Raspberry Pi Imager][pi-imager] or [BalenaEtcher][balena-etcher].
 
+> Update: The Raspberry Pi Imager now has the 64-bit images under `Raspberry Pi OS (other)`.
+
 ### Add the Grafana repository 
 ```
 $ wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
