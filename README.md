@@ -79,12 +79,15 @@ $ sudo dpkg -i telegraf_1.20.2-1_arm64.deb
 
 $ sudo /bin/systemctl enable telegraf
 $ sudo /bin/systemctl start telegraf
+```
 
+Move the default configuration aside.
+```
 $ sudo mv /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.org
 ```
 
-Edit the `telegraf.conf` and add your influxdb token and bucket.
-Add the `telegraf.conf` and restart
+Edit the `telegraf.conf` and add your influxdb token and bucket.  
+Add the `telegraf.conf` and restart.
 ```
 $ sudo mv telegraf.conf /etc/telegraf/telegraf.d/smart_meter.conf
 $ sudo /bin/systemctl restart telegraf
